@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Understanding Marginal probability
+
+```{r echo=TRUE}
+# Createv a Matrix with random variables that represents our event space
+set.seed(123)
+event.space <- rnorm(25, 6, 2) %>% 
+  floor() %>% 
+  matrix(nrow = 5, ncol = 5)
+
+# Ensure that probability sums to 1
+total <- (event.space %>% sum())
+event.space <-
+event.space / total
+
+# View event space
+event.space %>% round(2)
+```
+
+Let's say that the rows represent all possible outcomes of Event 1 and the columns represent all possible outcomes of Event 2. To make things easier, we'll name the possible outcomes for event A as {`r LETTERS[4:8]`} and the possible outcomes for event B as {`r LETTERS[9:13]`}
+```{r}
+# Name the outcomes
+rownames(event.space) <- c(LETTERS[4:8])
+colnames(event.space) <- c(LETTERS[9:13])
+event.space %>% round(2)
+```
+
+The Marginal probabilitiy of event A = D is simply the sum of all the occurences of D for a each possible value of Event 2
+
+```{r}
+(marginal.prob.of.d <- sum(event.space["D", ]))
+```
+
+What we've done is taken the sum of the joint probabilities where Event 1 is D and Event 2 is all possible values. Written explicitly, this becomes
+\[
+P(D,I) + P(D,J)+P(D,K)+P(D,L)+P(D,M)
+\]\
+And in code:
+```{r}
+(marginal.prob.of.d <- event.space["D","I"] + event.space["D","J"] +
+   event.space["D","K"] + event.space["D","L"] + event.space["D","M"])
+```
+
+This is important to know because sometimes we know joint probabilities but want to express 
