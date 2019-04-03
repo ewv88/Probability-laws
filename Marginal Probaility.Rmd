@@ -1,6 +1,7 @@
 ---
 title: "R Notebook"
 output: html_notebook
+  
 ---
 
 # Understanding Marginal probability
@@ -8,9 +9,9 @@ output: html_notebook
 ```{r echo=TRUE}
 # Createv a Matrix with random variables that represents our event space
 set.seed(123)
-event.space <- rnorm(25, 6, 2) %>% 
+event.space <- rnorm(16, 6, 2) %>% 
   floor() %>% 
-  matrix(nrow = 5, ncol = 5)
+  matrix(nrow = 4, ncol = 4)
 
 # Ensure that probability sums to 1
 total <- (event.space %>% sum())
@@ -21,11 +22,11 @@ event.space / total
 event.space %>% round(2)
 ```
 
-Let's say that the rows represent all possible outcomes of Event 1 and the columns represent all possible outcomes of Event 2. To make things easier, we'll name the possible outcomes for event A as {`r LETTERS[4:8]`} and the possible outcomes for event B as {`r LETTERS[9:13]`}
+Let's say that the rows represent all possible outfits one could wear (We'll call this the outfit event) and the columns represent all possible weather types (We'll call this the weather event). We'll name the possible outcomes for outfits as {`r rownames(event.space)`} and the possible outcomes for weather as {`r colnames(event.space)`}
 ```{r}
 # Name the outcomes
-rownames(event.space) <- c(LETTERS[4:8])
-colnames(event.space) <- c(LETTERS[9:13])
+rownames(event.space) <- c("Heavy Coat", "Tshirt", "Swimsuit", "Raincoat")
+colnames(event.space) <- c("Snow", "Rainy", "Sunny", "Windy")
 event.space %>% round(2)
 ```
 
